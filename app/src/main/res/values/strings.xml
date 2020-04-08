@@ -2,4 +2,6 @@
     <string name="app_name">Bookar</string>
     <string name="find">Find</string>
     <string name="saved">Saved</string>
+    <string name="find_book">Find book</string>
+    <string name="saved_books">Saved books</string>
 </resources>

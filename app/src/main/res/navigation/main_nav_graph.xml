@@ -9,5 +9,34 @@
         android:id="@+id/mainFragment"
         android:name="com.onpu.bookar.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/actionToSearch"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/actionToSaved"
+            app:destination="@id/savedBooksFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.onpu.bookar.presentation.find.FindBookFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_find_book" />
+
+    <fragment
+        android:id="@+id/savedBooksFragment"
+        android:name="com.onpu.bookar.presentation.saved.SavedBookFragment"
+        android:label="SavedBooks"
+        tools:layout="@layout/fragment_saved_books" />
 </navigation>
