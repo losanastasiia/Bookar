@@ -1,4 +1,4 @@
-package com.onpu.bookar.presentation.find
+package com.onpu.bookar.view.find
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.onpu.bookar.R
 import com.onpu.bookar.model.BookModel
-import com.onpu.bookar.presentation.BookListAdapter
+import com.onpu.bookar.view.BookListAdapter
 import kotlinx.android.synthetic.main.fragment_find_book.*
 
 class FindBookFragment: Fragment(R.layout.fragment_find_book),

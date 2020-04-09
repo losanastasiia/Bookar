@@ -1,4 +1,4 @@
-package com.onpu.bookar.presentation
+package com.onpu.bookar.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.onpu.bookar.R
 import com.onpu.bookar.model.BookModel
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.item_book.view.*
 
 class BookListAdapter(private val listener: OnBookClickedListener): RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
@@ -18,9 +19,12 @@ class BookListAdapter(private val listener: OnBookClickedListener): RecyclerView
     override fun getItemCount() = books.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val book = books[position]
         with(holder.itemView) {
-            name.text = books[position].name
-            setOnClickListener { listener.onBookClicked(books[position]) }
+            name.text = book.name
+            save.setImageResource(R.drawable.ic_star)
+            save.setOnClickListener { listener.onFavouriteClicked(book) }
+            setOnClickListener { listener.onBookClicked(book) }
         }
     }
 

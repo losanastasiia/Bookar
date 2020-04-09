@@ -1,4 +1,4 @@
-package com.onpu.bookar.presentation.saved
+package com.onpu.bookar.view.saved
 
 import android.os.Bundle
 import android.view.View
