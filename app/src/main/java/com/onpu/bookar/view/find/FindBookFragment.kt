@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.onpu.bookar.R
-import com.onpu.bookar.model.BookModel
+import com.onpu.bookar.model.data.BookModel
 import com.onpu.bookar.view.BookListAdapter
 import kotlinx.android.synthetic.main.fragment_find_book.*
 

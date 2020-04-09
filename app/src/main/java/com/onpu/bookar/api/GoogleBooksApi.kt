@@ -1,7 +1,7 @@
 package com.onpu.bookar.api
 
-import com.onpu.bookar.model.BookModel
-import com.onpu.bookar.model.BookWrapper
+import com.onpu.bookar.model.data.BookWrapper
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,5 +11,5 @@ interface GoogleBooksApi {
     fun getBook(
         @Query("q") title: String,
         @Query("key") key: String = "AIzaSyBR1kAEk2qbAlCHYBJPIDmtOrwplQqCcqg"
-    ): BookWrapper
+    ): Call<BookWrapper>
 }

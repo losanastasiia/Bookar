@@ -5,8 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.onpu.bookar.R
-import com.onpu.bookar.model.BookModel
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import com.onpu.bookar.model.data.BookModel
 import kotlinx.android.synthetic.main.item_book.view.*
 
 class BookListAdapter(private val listener: OnBookClickedListener): RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
