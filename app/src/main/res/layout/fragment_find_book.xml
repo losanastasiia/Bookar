@@ -39,9 +39,12 @@
     <EditText
         android:id="@+id/query"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_margin="10dp"
         android:textColor="@color/black"
+        android:maxLines="1"
+        android:background="@null"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/find"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />

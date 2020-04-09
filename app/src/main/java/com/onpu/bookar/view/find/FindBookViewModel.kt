@@ -24,6 +24,7 @@ class FindBookViewModel: ViewModel(), NetworkRepository.RequestCallback {
     }
 
     fun findBook(title: String) {
+        eventsLd.value = Events.StartLoad
         viewModelScope.launch(Dispatchers.IO) {
             networking.findBook(title, this@FindBookViewModel)
         }
