@@ -1,5 +1,7 @@
 package com.onpu.bookar.model
 
+import com.google.gson.annotations.SerializedName
+
 data class BookWrapper(
-    val books: List<BookModel>
+    @SerializedName("items")val books: List<BookModel>
 )

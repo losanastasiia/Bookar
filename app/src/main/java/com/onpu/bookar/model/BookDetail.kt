@@ -1,5 +1,7 @@
 package com.onpu.bookar.model
 
+import com.google.gson.annotations.SerializedName
+
 data class BookDetail(
     val title: String,
     val authors: List<String>,
@@ -7,7 +9,7 @@ data class BookDetail(
     val publishedDate: String,
     val description: String,
     val categories: List<String>,
-    val images: BookImages,
+    @SerializedName("imageLinks") val images: BookImages,
     val language: String,
     val previewLink: String
 )
