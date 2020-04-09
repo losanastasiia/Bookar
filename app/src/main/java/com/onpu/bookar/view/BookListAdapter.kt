@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_book.view.*
 
 class BookListAdapter(private val listener: OnBookClickedListener): RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
 
-    private val books = mutableListOf<BookModel>()
+    var books = listOf<BookModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false))
@@ -20,7 +20,7 @@ class BookListAdapter(private val listener: OnBookClickedListener): RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
         with(holder.itemView) {
-            name.text = book.name
+            name.text = book.details.title
             save.setImageResource(R.drawable.ic_star)
             save.setOnClickListener { listener.onFavouriteClicked(book) }
             setOnClickListener { listener.onBookClicked(book) }

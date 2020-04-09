@@ -4,4 +4,6 @@
     <string name="saved">Saved</string>
     <string name="find_book">Find book</string>
     <string name="saved_books">Saved books</string>
+    <string name="error_loading_books">Error while loading books...</string>
+    <string name="type_book_title">Type in the book title!</string>
 </resources>
