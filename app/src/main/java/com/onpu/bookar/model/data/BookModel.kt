@@ -3,9 +3,9 @@ package com.onpu.bookar.model.data
 import com.google.gson.annotations.SerializedName
 
 data class BookModel(
-    val id: String,
+    @SerializedName("id") val id: String,
     @SerializedName("volumeInfo")val details: BookDetail,
-    val saleInfo: BookSaleInfo,
+    @SerializedName("saleInfo")val saleInfo: BookSaleInfo,
     var saved: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {

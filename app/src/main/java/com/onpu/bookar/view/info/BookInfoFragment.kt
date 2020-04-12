@@ -1,7 +1,12 @@
 package com.onpu.bookar.view.info
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.onpu.bookar.R
 import com.onpu.bookar.model.data.BookModel
 import kotlinx.android.synthetic.main.fragment_book_info.*
+
 
 class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
 
@@ -29,7 +35,8 @@ class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
         viewModel.getBookInfo(args.bookInfo)
         viewModel.bookInfo.observe(viewLifecycleOwner, Observer {
             when (it) {
-                BookInfoViewModel.LoadingProcess.Loading -> {}
+                BookInfoViewModel.LoadingProcess.Loading -> {
+                }
                 is BookInfoViewModel.LoadingProcess.Loaded -> it.books?.let { book -> initData(book) }
             }
         })
@@ -38,11 +45,41 @@ class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
     private fun initData(bookModel: BookModel) {
         val details = bookModel.details
         Glide.with(requireContext()).load(details.images.thumbnail).into(image)
-        price.text = bookModel.saleInfo.listPrice.amount.toString()
-        priceCurrency.text = bookModel.saleInfo.listPrice.currencyCode
+        price.text =
+            bookModel.saleInfo.listPrice?.let { it.amount.toString() }
+                ?: run {
+                    buy.isVisible = false
+                    getString(R.string.not_for_sale)
+                }
+        priceCurrency.text = bookModel.saleInfo.listPrice?.currencyCode
         title.text = details.title
-        authors.text = details.authors.joinToString(", ")
-        categories.text = details.categories.joinToString(", ")
-        description.text = details.description
+        details.authors?.let{
+            authors.text = it.joinToString(", ")
+        } ?: kotlin.run {
+            authors.isVisible = false
+            authorsTv.isVisible = false
+        }
+        details.categories?.let {
+            categories.text = it.joinToString(", ")
+        }?: kotlin.run {
+            categories.isVisible = false
+            categoriesTv.isVisible = false
+        }
+        details.description?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                description.text = Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                description.text = Html.fromHtml(it)
+            }
+        } ?: kotlin.run {
+            descriptionTv.isVisible = false
+            description.isVisible = false
+        }
+
+        buy.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(bookModel.saleInfo.buyLink))
+            startActivity(browserIntent)
+        }
     }
 }

@@ -29,7 +29,7 @@ class SavedBookViewModel : ViewModel(), DataRepository.RequestCallback {
 
             val booksId = repo.getBooksId()
             if (booksId.isEmpty())
-                booksLd.postValue(LoadingProcess.Loaded(emptyList()))
+                booksLd.postValue(LoadingProcess.Loaded(mutableListOf()))
             else
                 booksId.forEach {
                     repo.findBookById(it, this@SavedBookViewModel)
@@ -38,14 +38,21 @@ class SavedBookViewModel : ViewModel(), DataRepository.RequestCallback {
     }
 
     override fun onRequestSuccess(book: BookWrapper?) {
-        book?.let {
-            booksLd.value =
-                LoadingProcess.Loaded(it.books.apply { it.books.forEach { it.saved = true } })
-        } ?: LoadingProcess.Loaded(emptyList())
+        booksLd.value = book?.let {
+            booksLd.value?.let { loadingProcess ->
+                val books = when(loadingProcess) {
+                    LoadingProcess.Loading -> mutableListOf()
+                    is LoadingProcess.Loaded -> loadingProcess.books
+                }
+                books.removeAll(it.books)
+                books.addAll(it.books)
+                LoadingProcess.Loaded(books.apply { it.books.forEach { it.saved = true } })
+            }
+        } ?: LoadingProcess.Loaded(mutableListOf())
     }
 
     override fun onRequestFailed() {
-        booksLd.value = LoadingProcess.Loaded(emptyList())
+        booksLd.value = LoadingProcess.Loaded(mutableListOf())
     }
 
     fun onSaveClicked(bookModel: BookModel) {
@@ -65,6 +72,6 @@ class SavedBookViewModel : ViewModel(), DataRepository.RequestCallback {
 
     sealed class LoadingProcess() {
         object Loading : LoadingProcess()
-        class Loaded(val books: List<BookModel>) : LoadingProcess()
+        class Loaded(val books: MutableList<BookModel>) : LoadingProcess()
     }
 }
