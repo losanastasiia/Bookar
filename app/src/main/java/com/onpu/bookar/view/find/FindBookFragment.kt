@@ -33,7 +33,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
         toolbar.setTitle(R.string.find_book)
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
         rvList.layoutManager = LinearLayoutManager(requireContext())
-        rvList.adapter = BookListAdapter(this, false)
+        rvList.adapter = BookListAdapter(this)
         find.setOnClickListener {
             if(query.text.isNotEmpty())
                 viewModel.findBook(query.text.toString())
@@ -47,6 +47,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
     }
 
     override fun onFavouriteClicked(bookModel: BookModel) {
+        viewModel.onFavouriteChanged(bookModel)
     }
 
     private fun observeEvents() {

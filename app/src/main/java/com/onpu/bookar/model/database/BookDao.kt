@@ -11,8 +11,8 @@ interface BookDao {
     @Insert
     fun insertBook(book: Book)
 
-    @Delete
-    fun deleteBook(book: Book)
+    @Query("DELETE FROM Book WHERE bookId=:bookId")
+    fun deleteBook(bookId: String)
 
     @Query("SELECT * FROM Book WHERE bookId=:id")
     fun findBookById(id: String): Book?

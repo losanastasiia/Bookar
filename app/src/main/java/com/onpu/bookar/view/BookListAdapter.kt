@@ -1,22 +1,16 @@
 package com.onpu.bookar.view
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.onpu.bookar.R
 import com.onpu.bookar.model.data.BookModel
 import kotlinx.android.synthetic.main.item_book.view.*
 
-class BookListAdapter(private val listener: OnBookClickedListener, val isSavedList: Boolean) :
+class BookListAdapter(private val listener: OnBookClickedListener) :
     RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
 
     var books = listOf<BookModel>()
@@ -31,11 +25,23 @@ class BookListAdapter(private val listener: OnBookClickedListener, val isSavedLi
         with(holder.itemView) {
             name.text = book.details.title
             initImage(book.details.images.thumbnail, image)
-            if (isSavedList)
+            if (book.saved) {
                 save.setImageResource(R.drawable.ic_star)
-            else
+            }
+            else {
                 save.setImageResource(R.drawable.ic_star_border)
-            save.setOnClickListener { listener.onFavouriteClicked(book) }
+            }
+            save.setOnClickListener {
+                if (book.saved) {
+                    save.setImageResource(R.drawable.ic_star_border)
+                    book.saved = false
+                }
+                else {
+                    save.setImageResource(R.drawable.ic_star)
+                    book.saved = true
+                }
+                listener.onFavouriteClicked(book)
+            }
             setOnClickListener { listener.onBookClicked(book) }
         }
     }

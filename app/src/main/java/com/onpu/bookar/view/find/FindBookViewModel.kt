@@ -3,16 +3,25 @@ package com.onpu.bookar.view.find
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.onpu.bookar.dagger.ComponentProvider
+import com.onpu.bookar.model.data.BookModel
 import com.onpu.bookar.model.data.BookWrapper
-import com.onpu.bookar.model.repo.NetworkRepository
+import com.onpu.bookar.model.database.Book
+import com.onpu.bookar.model.repo.DataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FindBookViewModel: ViewModel(), NetworkRepository.RequestCallback {
+class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
 
-    private val networking = NetworkRepository()
+    @Inject
+    lateinit var data: DataRepository
     val bookInfo: MutableLiveData<BookWrapper> = MutableLiveData()
     val eventsLd: MutableLiveData<Events> = MutableLiveData()
+
+    init {
+        ComponentProvider.appComponent.inject(this)
+    }
 
     override fun onRequestSuccess(book: BookWrapper?) {
         eventsLd.value = Events.Finished
@@ -26,13 +35,22 @@ class FindBookViewModel: ViewModel(), NetworkRepository.RequestCallback {
     fun findBook(title: String) {
         eventsLd.value = Events.StartLoad
         viewModelScope.launch(Dispatchers.IO) {
-            networking.findBook(title, this@FindBookViewModel)
+            data.findBook(title, this@FindBookViewModel)
+        }
+    }
+
+    fun onFavouriteChanged(bookModel: BookModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (bookModel.saved)
+                data.deleteBook(bookModel.id)
+            else
+                data.saveBook(Book(bookModel.id, bookModel.details.images.thumbnail, bookModel.details.title))
         }
     }
 
     sealed class Events {
-        object StartLoad: Events()
-        object Finished: Events()
-        object Error: Events()
+        object StartLoad : Events()
+        object Finished : Events()
+        object Error : Events()
     }
 }
