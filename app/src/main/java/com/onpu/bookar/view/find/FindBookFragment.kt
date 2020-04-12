@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_find_book.*
 class FindBookFragment : Fragment(R.layout.fragment_find_book),
     BookListAdapter.OnBookClickedListener {
 
-    lateinit var viewModel: FindBookViewModel
+    private lateinit var viewModel: FindBookViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
         toolbar.setTitle(R.string.find_book)
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
         rvList.layoutManager = LinearLayoutManager(requireContext())
-        rvList.adapter = BookListAdapter(this)
+        rvList.adapter = BookListAdapter(this, false)
         find.setOnClickListener {
             if(query.text.isNotEmpty())
                 viewModel.findBook(query.text.toString())
