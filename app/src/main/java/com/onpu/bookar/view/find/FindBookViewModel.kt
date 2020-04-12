@@ -27,11 +27,11 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
         viewModelScope.launch(Dispatchers.IO) {
             val savedBooks = data.getBooks()
             book?.let { booksWrapper ->
-                booksWrapper.books.forEach {
+                booksWrapper.books?.forEach {
                     if (savedBooks.contains(Book(it.id, it.details.images.thumbnail, it.details.title))) {
                         it.saved = true
                     }
-                }
+                }?: kotlin.run { booksWrapper.books = emptyList()}
                 bookInfo.postValue(booksWrapper)
             }
             eventsLd.postValue(Events.Finished)

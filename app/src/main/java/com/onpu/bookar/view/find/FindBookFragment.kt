@@ -35,7 +35,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
         rvList.layoutManager = LinearLayoutManager(requireContext())
         rvList.adapter = BookListAdapter(this)
         find.setOnClickListener {
-            if(query.text.isNotEmpty())
+            if (query.text.isNotEmpty())
                 viewModel.findBook(query.text.toString())
             else
                 query.error = getString(R.string.type_book_title)
@@ -54,6 +54,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
         viewModel.eventsLd.observe(viewLifecycleOwner, Observer {
             when (it) {
                 FindBookViewModel.Events.StartLoad -> {
+                    search.isVisible = false
                     loading.isVisible = true
                     errorTv.isVisible = false
                     rvList.isVisible = false
@@ -65,13 +66,15 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
                 }
                 FindBookViewModel.Events.Error -> {
                     loading.isVisible = false
+                    search.isVisible = false
                     errorTv.isVisible = true
                     rvList.isVisible = false
                 }
             }
         })
         viewModel.bookInfo.observe(viewLifecycleOwner, Observer {
-            (rvList.adapter as BookListAdapter).books = it.books
+            search.isVisible = it.books?.isEmpty() == true
+            (rvList.adapter as BookListAdapter).books = it?.books?: emptyList()
             (rvList.adapter as BookListAdapter).notifyDataSetChanged()
         })
     }

@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 import com.onpu.bookar.model.data.BookModel
 
 data class BookWrapper(
-    @SerializedName("items")val books: List<BookModel>
+    @SerializedName("items")var books: List<BookModel>?
 )

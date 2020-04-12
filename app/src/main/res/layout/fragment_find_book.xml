@@ -43,8 +43,8 @@
         android:layout_margin="10dp"
         android:layout_marginTop="8dp"
         android:background="@null"
-        android:maxLines="1"
         android:inputType="text"
+        android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/find"
@@ -78,4 +78,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/query"
         tools:listitem="@layout/item_book" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="searchTv,searchIv"/>
+
+    <ImageView
+        android:id="@+id/searchIv"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_search_book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/searchTv"
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:text="@string/type_book_title"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/searchIv"
+        android:layout_marginTop="20dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

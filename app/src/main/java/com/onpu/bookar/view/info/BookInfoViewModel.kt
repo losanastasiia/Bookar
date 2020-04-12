@@ -24,7 +24,7 @@ class BookInfoViewModel: ViewModel(), DataRepository.RequestCallback {
 
     override fun onRequestSuccess(book: BookWrapper?) {
         book?.let {
-            bookInfo.postValue(LoadingProcess.Loaded(it.books.first()))
+            bookInfo.postValue(LoadingProcess.Loaded(it.books?.first()))
         }?:bookInfo.postValue(LoadingProcess.Loaded(null))
     }
 

@@ -44,9 +44,11 @@ class SavedBookViewModel : ViewModel(), DataRepository.RequestCallback {
                     LoadingProcess.Loading -> mutableListOf()
                     is LoadingProcess.Loaded -> loadingProcess.books
                 }
-                books.removeAll(it.books)
-                books.addAll(it.books)
-                LoadingProcess.Loaded(books.apply { it.books.forEach { it.saved = true } })
+                it.books?.let {
+                books.removeAll(it)
+                books.addAll(it)
+            }
+                LoadingProcess.Loaded(books.apply { it.books?.forEach { it.saved = true } })
             }
         } ?: LoadingProcess.Loaded(mutableListOf())
     }
