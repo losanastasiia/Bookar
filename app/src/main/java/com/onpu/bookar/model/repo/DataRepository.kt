@@ -41,6 +41,9 @@ class DataRepository(val service: Service, val bookDao: BookDao) {
         )
     }
 
+    fun getBooksId() = bookDao.getBooksId()
+
+    fun getBooks() = bookDao.getBooks()
 
     fun deleteBook(bookId: String) {
         bookDao.deleteBook(bookId)

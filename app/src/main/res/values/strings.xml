@@ -6,4 +6,12 @@
     <string name="saved_books">Saved books</string>
     <string name="error_loading_books">Error while loading books...</string>
     <string name="type_book_title">Type in the book title!</string>
+    <string name="noResult">No saved books</string>
+    <string name="book_info">Book info</string>
+    <string name="price">Price:</string>
+    <string name="buy">Buy</string>
+    <string name="authors">Authors:</string>
+    <string name="categories">Categories:</string>
+    <string name="description">Description:</string>
+    <string name="preview">Preview</string>
 </resources>

@@ -2,6 +2,7 @@ package com.onpu.bookar.dagger
 
 import android.content.Context
 import com.onpu.bookar.api.Service
+import com.onpu.bookar.model.database.BookDao
 import com.onpu.bookar.model.database.BookDatabase
 import com.onpu.bookar.model.repo.DataRepository
 import dagger.Module
@@ -27,5 +28,5 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideNetworkRepo(service: Service) = DataRepository(service)
+    fun provideNetworkRepo(service: Service, bookDao: BookDao) = DataRepository(service, bookDao)
 }

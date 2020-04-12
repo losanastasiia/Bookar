@@ -43,7 +43,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
     }
 
     override fun onBookClicked(bookModel: BookModel) {
-
+        findNavController().navigate(FindBookFragmentDirections.actionToInfo(bookModel.id))
     }
 
     override fun onFavouriteClicked(bookModel: BookModel) {

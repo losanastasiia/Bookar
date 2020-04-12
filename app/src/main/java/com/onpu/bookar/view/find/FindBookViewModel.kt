@@ -24,8 +24,18 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
     }
 
     override fun onRequestSuccess(book: BookWrapper?) {
-        eventsLd.value = Events.Finished
-        book?.let { bookInfo.value = it }
+        viewModelScope.launch(Dispatchers.IO) {
+            val savedBooks = data.getBooks()
+            book?.let { booksWrapper ->
+                booksWrapper.books.forEach {
+                    if (savedBooks.contains(Book(it.id, it.details.images.thumbnail, it.details.title))) {
+                        it.saved = true
+                    }
+                }
+                bookInfo.postValue(booksWrapper)
+            }
+            eventsLd.postValue(Events.Finished)
+        }
     }
 
     override fun onRequestFailed() {
@@ -41,10 +51,19 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
 
     fun onFavouriteChanged(bookModel: BookModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (bookModel.saved)
+            if (!bookModel.saved) {
                 data.deleteBook(bookModel.id)
-            else
-                data.saveBook(Book(bookModel.id, bookModel.details.images.thumbnail, bookModel.details.title))
+                bookModel.saved = false
+            } else {
+                bookModel.saved = true
+                data.saveBook(
+                    Book(
+                        bookModel.id,
+                        bookModel.details.images.thumbnail,
+                        bookModel.details.title
+                    )
+                )
+            }
         }
     }
 
