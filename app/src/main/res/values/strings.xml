@@ -15,4 +15,5 @@
     <string name="description">Description:</string>
     <string name="preview">Preview</string>
     <string name="not_for_sale">Not for sale</string>
+    <string name="cant_open_preview">Can\'t open preview</string>
 </resources>

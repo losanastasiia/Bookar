@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.onpu.bookar.R
 import com.onpu.bookar.model.data.BookModel
 import kotlinx.android.synthetic.main.fragment_book_info.*
@@ -76,6 +77,13 @@ class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
             description.isVisible = false
         }
 
+        preview.setOnClickListener {
+            bookModel.details.previewLink?.let {
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                startActivity(browserIntent)
+            } ?: Snackbar.make(this.requireView(), getString(R.string.cant_open_preview), Snackbar.LENGTH_SHORT).show()
+        }
         buy.setOnClickListener {
             val browserIntent =
                 Intent(Intent.ACTION_VIEW, Uri.parse(bookModel.saleInfo.buyLink))
