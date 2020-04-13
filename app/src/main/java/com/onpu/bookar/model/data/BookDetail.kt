@@ -9,7 +9,7 @@ data class BookDetail(
     val publishedDate: String?,
     val description: String?,
     val categories: List<String>?,
-    @SerializedName("imageLinks") val images: BookImages,
+    @SerializedName("imageLinks") val images: BookImages?,
     val language: String?,
     val previewLink: String?
 )

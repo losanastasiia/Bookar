@@ -45,16 +45,20 @@ class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
 
     private fun initData(bookModel: BookModel) {
         val details = bookModel.details
-        Glide.with(requireContext()).load(details.images.thumbnail).into(image)
+        details.images?.let { images ->
+            images.thumbnail?.let {
+                Glide.with(requireContext()).load(it).into(image)
+            } ?: image.setImageResource(R.drawable.ic_book_image)
+        } ?: image.setImageResource(R.drawable.ic_book_image)
         price.text =
-            bookModel.saleInfo.listPrice?.let { it.amount.toString() }
+            bookModel.saleInfo.listPrice?.amount?.toString()
                 ?: run {
                     buy.isVisible = false
                     getString(R.string.not_for_sale)
                 }
         priceCurrency.text = bookModel.saleInfo.listPrice?.currencyCode
         title.text = details.title
-        details.authors?.let{
+        details.authors?.let {
             authors.text = it.joinToString(", ")
         } ?: kotlin.run {
             authors.isVisible = false
@@ -62,7 +66,7 @@ class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
         }
         details.categories?.let {
             categories.text = it.joinToString(", ")
-        }?: kotlin.run {
+        } ?: kotlin.run {
             categories.isVisible = false
             categoriesTv.isVisible = false
         }
@@ -82,7 +86,11 @@ class BookInfoFragment : Fragment(R.layout.fragment_book_info) {
                 val browserIntent =
                     Intent(Intent.ACTION_VIEW, Uri.parse(it))
                 startActivity(browserIntent)
-            } ?: Snackbar.make(this.requireView(), getString(R.string.cant_open_preview), Snackbar.LENGTH_SHORT).show()
+            } ?: Snackbar.make(
+                this.requireView(),
+                getString(R.string.cant_open_preview),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
         buy.setOnClickListener {
             val browserIntent =

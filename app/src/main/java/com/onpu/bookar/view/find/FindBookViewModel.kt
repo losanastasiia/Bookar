@@ -28,7 +28,7 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
             val savedBooks = data.getBooks()
             book?.let { booksWrapper ->
                 booksWrapper.books?.forEach {
-                    if (savedBooks.contains(Book(it.id, it.details.images.thumbnail, it.details.title))) {
+                    if (savedBooks.contains(Book(it.id, it.details.images?.thumbnail, it.details.title))) {
                         it.saved = true
                     }
                 }?: kotlin.run { booksWrapper.books = emptyList()}
@@ -59,7 +59,7 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
                 data.saveBook(
                     Book(
                         bookModel.id,
-                        bookModel.details.images.thumbnail,
+                        bookModel.details.images?.thumbnail,
                         bookModel.details.title
                     )
                 )

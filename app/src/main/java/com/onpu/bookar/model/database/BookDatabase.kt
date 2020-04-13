@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [Book::class]
 )
 abstract class BookDatabase: RoomDatabase(){
@@ -16,6 +16,8 @@ abstract class BookDatabase: RoomDatabase(){
     companion object {
         private val tableName = "Book"
         fun instance(context: Context) =
-            Room.databaseBuilder(context, BookDatabase::class.java, tableName).build()
+            Room.databaseBuilder(context, BookDatabase::class.java, tableName)
+                .fallbackToDestructiveMigration()
+                .build()
     }
 }

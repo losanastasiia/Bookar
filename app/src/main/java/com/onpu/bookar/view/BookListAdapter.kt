@@ -24,7 +24,7 @@ class BookListAdapter(private val listener: OnBookClickedListener) :
         val book = books[position]
         with(holder.itemView) {
             name.text = book.details.title
-            initImage(book.details.images.thumbnail, image)
+            initImage(book.details.images?.thumbnail, image)
             if (book.saved) {
                 save.setImageResource(R.drawable.ic_star)
             }
@@ -46,11 +46,13 @@ class BookListAdapter(private val listener: OnBookClickedListener) :
         }
     }
 
-    private fun initImage(uri: String, imageView: ImageView) {
-        Glide.with(imageView)
-            .load(uri)
-            .centerCrop()
-            .into(imageView)
+    private fun initImage(uri: String?, imageView: ImageView) {
+        uri?.let {
+            Glide.with(imageView)
+                .load(it)
+                .centerCrop()
+                .into(imageView)
+        } ?: imageView.setImageResource(R.drawable.ic_book_image)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

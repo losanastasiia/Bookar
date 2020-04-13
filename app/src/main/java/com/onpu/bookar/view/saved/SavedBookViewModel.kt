@@ -65,7 +65,7 @@ class SavedBookViewModel : ViewModel(), DataRepository.RequestCallback {
                 repo.saveBook(
                     Book(
                         bookModel.id,
-                        bookModel.details.images.thumbnail,
+                        bookModel.details.images?.thumbnail,
                         bookModel.details.title
                     )
                 )
