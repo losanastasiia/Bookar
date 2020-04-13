@@ -24,16 +24,19 @@ class BookInfoViewModel: ViewModel(), DataRepository.RequestCallback {
         ComponentProvider.appComponent.inject(this)
     }
 
+    // метод, который callback-ом вызовет на репозиторий класс, когда получит данные о книге из сети
     override fun onRequestSuccess(book: BookWrapper?) {
         book?.let {
             bookInfo.postValue(LoadingProcess.Loaded(it.books?.first()))
         }?:bookInfo.postValue(LoadingProcess.Loaded(null))
     }
 
+    // метод, который callback-ом вызовет на репозиторий класс, когда произойдёт ошибка зарпоса в сеть
     override fun onRequestFailed() {
         bookInfo.postValue(LoadingProcess.Loaded(null))
     }
 
+    // метод, который вызывается фрагментом для получения информации о книге по её id
     fun getBookInfo(id: String) {
         bookInfo.postValue(LoadingProcess.Loading)
         viewModelScope.launch(Dispatchers.IO) {

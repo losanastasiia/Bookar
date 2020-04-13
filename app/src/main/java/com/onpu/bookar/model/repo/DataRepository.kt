@@ -12,6 +12,7 @@ import retrofit2.Response
 // класс, входящий в слой "репозиторий", который отвечает за получение данных из сети, бд и управление ими
 class DataRepository(val service: Service, val bookDao: BookDao) {
 
+    // "лезем" в сеть (Google Book Api) для получения данных о книге по названию
     fun findBook(title: String, callback: RequestCallback) {
         service.getBookApi().getBook(title).enqueue(
             object :Callback<BookWrapper> {
@@ -27,6 +28,7 @@ class DataRepository(val service: Service, val bookDao: BookDao) {
         )
     }
 
+    // отправляем запрос в наш АПИ для получения информации о книге по её уникальному id
     fun findBookById(id: String, callback: RequestCallback) {
         service.getBookApi().getBookById(id).enqueue(
             object :Callback<BookModel> {

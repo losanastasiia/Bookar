@@ -32,6 +32,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
         toolbar.setNavigationIcon(R.drawable.ic_back)
         toolbar.setTitle(R.string.find_book)
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+        // инициализируем наш RecyclerView
         rvList.layoutManager = LinearLayoutManager(requireContext())
         rvList.adapter = BookListAdapter(this)
         find.setOnClickListener {
@@ -50,6 +51,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
         viewModel.onFavouriteChanged(bookModel)
     }
 
+    // подписываемся на события загрузки данных, которые нам посылает наша вью модель
     private fun observeEvents() {
         viewModel.eventsLd.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -72,6 +74,7 @@ class FindBookFragment : Fragment(R.layout.fragment_find_book),
                 }
             }
         })
+        // заполняем на адаптер из RecyclerView данными
         viewModel.bookInfo.observe(viewLifecycleOwner, Observer {
             search.isVisible = it.books?.isEmpty() == true
             (rvList.adapter as BookListAdapter).books = it?.books?: emptyList()

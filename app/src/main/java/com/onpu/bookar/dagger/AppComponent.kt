@@ -10,10 +10,14 @@ import javax.inject.Singleton
 
 // компонент даггера, который отвечает за предоставление зависимостей классам
 @Component(
+    // перечисляем все даггер модули, которые ответственны за создание зависимостей
     modules = [AppModule::class]
 )
 @Singleton
 interface AppComponent {
+
+    // методы, которые позволяют классам ViewModel получить необходимые зависимости,
+    // которые им предоставит даггер
     fun inject(viewModel: FindBookViewModel)
     fun inject(viewModel: SavedBookViewModel)
     fun inject(viewModel: BookInfoViewModel)

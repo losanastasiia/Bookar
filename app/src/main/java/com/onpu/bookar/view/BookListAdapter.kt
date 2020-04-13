@@ -17,11 +17,13 @@ class BookListAdapter(private val listener: OnBookClickedListener) :
 
     var books = listOf<BookModel>()
 
+    // создаем класс ViewHolder-a, который является представлением элемента списка RecyclerView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false))
 
     override fun getItemCount() = books.size
 
+    // заполняем наш элемент списка данными, которые мы достаём из книги
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
         with(holder.itemView) {

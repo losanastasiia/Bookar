@@ -16,15 +16,18 @@ import javax.inject.Inject
 // также класс отвечает за использование слоя репозитория и получение данных оттуда
 class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
 
+    // получаем зависимость репозитория
     @Inject
     lateinit var data: DataRepository
     val bookInfo: MutableLiveData<BookWrapper> = MutableLiveData()
     val eventsLd: MutableLiveData<Events> = MutableLiveData()
 
     init {
+        // метод, вызов которго скажет даггеру, что сюда (в объект этого класса) нужно предоставить зависимости
         ComponentProvider.appComponent.inject(this)
     }
 
+    // метод, который callback-ом вызовет на репозиторий класс, когда получит данные о книге из сети
     override fun onRequestSuccess(book: BookWrapper?) {
         viewModelScope.launch(Dispatchers.IO) {
             val savedBooks = data.getBooks()
@@ -44,6 +47,7 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
         eventsLd.value = Events.Error
     }
 
+    // метод, который "дёргает" репозиторий, чтобы тот сделал запрос в сеть для получения данных о книге
     fun findBook(title: String) {
         eventsLd.value = Events.StartLoad
         viewModelScope.launch(Dispatchers.IO) {
@@ -51,12 +55,17 @@ class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
         }
     }
 
+    // метод, который вызывается из нашего фрагмента, когда пользователь нажимет сохранить книгу
     fun onFavouriteChanged(bookModel: BookModel) {
         viewModelScope.launch(Dispatchers.IO) {
+            // если книга уже сохранена и была нажата кнопка сохранения опять,
+            // то мы удаляем нашу книгу из локальной базы данных
             if (!bookModel.saved) {
                 data.deleteBook(bookModel.id)
                 bookModel.saved = false
             } else {
+                // если книга не сохранена и была нажата кнопка сохранения,
+                // то мы добавляем нашу книгу из локальной базы данных
                 bookModel.saved = true
                 data.saveBook(
                     Book(
