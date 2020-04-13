@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// отправляем запросы в гугл бук апи
 interface GoogleBooksApi {
 
     @GET("volumes")

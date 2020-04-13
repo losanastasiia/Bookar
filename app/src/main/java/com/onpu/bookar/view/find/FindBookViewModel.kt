@@ -12,6 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// класс вью модели, который содержит LiveData, на которую подписывается фрагмент,
+// также класс отвечает за использование слоя репозитория и получение данных оттуда
 class FindBookViewModel : ViewModel(), DataRepository.RequestCallback {
 
     @Inject

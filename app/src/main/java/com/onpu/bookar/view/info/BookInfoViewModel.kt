@@ -11,6 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// класс вью модели, который содержит LiveData, на которую подписывается фрагмент,
+// также класс отвечает за использование слоя репозитория и получение данных оттуда
 class BookInfoViewModel: ViewModel(), DataRepository.RequestCallback {
 
     val bookInfo: MutableLiveData<LoadingProcess> = MutableLiveData()
@@ -39,6 +41,8 @@ class BookInfoViewModel: ViewModel(), DataRepository.RequestCallback {
         }
     }
 
+    // класс представляющий процесс загрузки данных из сети/бд
+    // Создан, чтобы можно было использовать конструкцию when()
     sealed class LoadingProcess {
         object Loading : LoadingProcess()
         class Loaded(val books: BookModel?) : LoadingProcess()

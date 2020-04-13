@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
+// интерфейс, содержащий основные запросы в базу данных
 @Dao
 interface BookDao {
 

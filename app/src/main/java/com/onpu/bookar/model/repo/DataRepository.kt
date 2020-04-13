@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+// класс, входящий в слой "репозиторий", который отвечает за получение данных из сети, бд и управление ими
 class DataRepository(val service: Service, val bookDao: BookDao) {
 
     fun findBook(title: String, callback: RequestCallback) {

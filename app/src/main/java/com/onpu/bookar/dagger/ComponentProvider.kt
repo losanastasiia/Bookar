@@ -2,6 +2,7 @@ package com.onpu.bookar.dagger
 
 import android.content.Context
 
+// синглтон класс, который занимается предоставлением даггер компонента
 object ComponentProvider {
     lateinit var appComponent: AppComponent
 

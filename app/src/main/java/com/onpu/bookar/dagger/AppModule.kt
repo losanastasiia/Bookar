@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+// класс модуль, содержащий методы, которые "учат" даггер создавать необходимые обЪекты
 @Module
 class AppModule {
 

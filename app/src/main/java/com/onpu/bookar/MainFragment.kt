@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment: Fragment(R.layout.fragment_main) {
 
+    // вешаем слушателей на кнопки, чтобы можно было переходить на определённые фрагменты
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         find.setOnClickListener { findNavController().navigate(MainFragmentDirections.actionToSearch()) }

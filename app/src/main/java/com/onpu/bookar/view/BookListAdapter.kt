@@ -10,6 +10,8 @@ import com.onpu.bookar.R
 import com.onpu.bookar.model.data.BookModel
 import kotlinx.android.synthetic.main.item_book.view.*
 
+// класс адаптера отвечает за хранение данных в списке RecyclerView,
+// также создает и заполняет View для каждого элемента списка
 class BookListAdapter(private val listener: OnBookClickedListener) :
     RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
 

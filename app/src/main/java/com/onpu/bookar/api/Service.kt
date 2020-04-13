@@ -3,6 +3,7 @@ package com.onpu.bookar.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+// класс ответственный за создание ретрофит клиента
 class Service {
 
     private val retrofit: Retrofit = Retrofit.Builder()
